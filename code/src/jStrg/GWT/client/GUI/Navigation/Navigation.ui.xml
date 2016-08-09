@@ -1,0 +1,48 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+    <ui:style>
+
+
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: rgba(97, 103, 121, 0.1);
+        }
+
+        nav li {
+            float: left;
+        }
+
+        nav li a {
+            display: block;
+            width: 50px;
+            color: #949ba2;
+            text-align: center;
+            padding: 10px 10px;
+            text-decoration: none;
+
+        }
+
+        nav li a:hover {
+            cursor: default;
+            background-color: #f6a821;
+            color: white;
+        }
+    </ui:style>
+    <g:HTMLPanel>
+        <ul ui:field="ulElement">
+            <li>
+                <g:Hyperlink ui:field="nav1">Home</g:Hyperlink>
+            </li>
+            <li>
+                <g:Hyperlink ui:field="nav3">Files</g:Hyperlink>
+            </li>
+            <li>
+                <g:Hyperlink ui:field="nav4">Logout</g:Hyperlink>
+            </li>
+        </ul>
+    </g:HTMLPanel>
+</ui:UiBinder>

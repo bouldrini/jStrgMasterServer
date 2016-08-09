@@ -1,0 +1,13 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+    <g:HTMLPanel>
+        <g:FormPanel ui:field="uploadForm" method="POST">
+            <g:FlowPanel>
+                <g:Hidden ui:field="parent_id" name="parent_id"></g:Hidden>
+                <g:Hidden ui:field="file_id" name="file_id"></g:Hidden>
+                <g:FileUpload ui:field="uploadFile" name="FileUpload" title="select file"></g:FileUpload>
+                <g:Button ui:field="uploadFileBtn">Upload</g:Button>
+            </g:FlowPanel>
+        </g:FormPanel>
+    </g:HTMLPanel>
+</ui:UiBinder>

@@ -1,0 +1,476 @@
+%% ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+%% Hauptdatei, Wurzel des Dokuments
+%% ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+%
+%
+\documentclass
+[   oneside,         % oneside/twoside : Einseitiger oder zweiseitiger Druck?
+    12pt,            % Bezug: 12-Punkt SchriftgrÃ¶ÃŸe
+    DIV15,           % Randaufteilung, siehe Dokumentation "KOMA"-Script
+    headsepline,     % Unter Kopfzeile Trennlinie (aus: headnosepline)
+    footsepline,     % Ãœber FuÃŸzeile Trennlinie (aus: footnosepline)
+    openright,       % Neue Kapitel im zweiseitigen Druck rechts beginnen lassen
+    a4paper,         % Seitenformat A4
+    abstracton,      % Abstract einbinden
+    titlepage,       % Titelseite aktivieren
+    headinclude,     % Seiten-Head in die Satzspiegelberechnung mit einbeziehen
+]   {scrreprt}       % Dokumentenstil: "Report" aus dem KOMA-Skript-Paket
+
+\usepackage[active]{srcltx}
+\usepackage[activate=normal]{pdfcprot} % Optischer Randausgleich -> pdflatex!
+\usepackage{ifthen}
+\usepackage{ngerman}
+% deutsche Silbentrennung
+\usepackage[ngerman]{babel}
+%\usepackage[latin1]{inputenc}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[T1]{url}
+\usepackage{ae}
+\usepackage{graphicx}
+\usepackage[automark]{scrpage2}
+\usepackage{setspace}
+%\usepackage[first,light]{draftcopy} % FÃ¼r Probedruck
+\usepackage[plainpages=false,pdfpagelabels,hypertexnames=false]{hyperref}
+\usepackage{amsmath,amssymb,amstext}
+\usepackage{amsthm}
+\usepackage{amsfonts} 
+%\theoremstyle{remark}
+\usepackage{color}
+\usepackage{paralist}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{newunicodechar}
+
+
+% Tiefe der Kapitelnummerierung beeinflussen
+\setcounter{secnumdepth}{1} % Tiefe der Nummerierung
+\setcounter{tocdepth}{1}    % Tiefe des Inhaltsverzeichnisses
+
+
+\newcommand{\artderausarbeitung}{Projektarbeit Programmierung 3}
+\newcommand{\namedesautors}{Jürgen Arne, Klemens Arndt, Richard Wieditz, Daniel Henneberg}
+%\newcommand{\inventarisierungsnummer}{}
+
+\author{\namedesautors}
+
+% AbkÃ¼rzungsverzeichnis beeinflussen. Hier nichts Ã¤ndern!
+\usepackage[intoc]{nomencl}
+  \let\abbrev\nomenclature
+  \renewcommand{\nomname}{Abkürzungsverzeichnis und Formelzeichen}
+  \setlength{\nomlabelwidth}{.25\hsize}
+  \renewcommand{\nomlabel}[1]{#1 \dotfill}
+  \setlength{\nomitemsep}{-\parsep}
+  \makenomenclature
+\usepackage[normalem]{ulem}
+  \newcommand{\markup}[1]{\textbf{#1}}
+	
+% Seitenlayout festlegen. Hier nichts Ã¤ndern!
+\pagestyle{scrplain}
+\ihead[]{\headmark}
+\ohead[]{\pagemark}
+\chead[]{}
+\ifoot[]{\scriptsize \artderausarbeitung}
+\ofoot[]{\scriptsize \namedesautors}
+\cfoot[]{}
+\renewcommand{\titlepagestyle}{scrheadings}
+\renewcommand{\partpagestyle}{scrheadings}
+\renewcommand{\chapterpagestyle}{scrheadings}
+\renewcommand{\indexpagestyle}{scrheadings}
+
+% Abschnittsweise Nummerierung anstatt fortlaufend. Hier nichts Ã¤ndern!
+\makeatletter
+\@addtoreset{equation}{chapter}
+\@addtoreset{figure}{chapter}
+\@addtoreset{table}{chapter}
+\renewcommand\theequation{\thechapter.\@arabic\c@equation}
+\renewcommand\thefigure{\thechapter.\@arabic\c@figure}
+\renewcommand\thetable{\thechapter.\@arabic\c@table}
+\makeatother
+
+% Quelltextrahmen, klein. Hier nichts Ã¤ndern!
+\newsavebox{\inhaltkl}
+\def\rahmenkl{\sbox{\inhaltkl}\bgroup\small\renewcommand{\baselinestretch}{1}\vbox\bgroup\hsize\textwidth}
+\def\endrahmenkl{\par\vskip-\lastskip\egroup\egroup\fboxsep3mm%
+\framebox[\textwidth][l]{\usebox{\inhaltkl}}}
+
+% Quelltextrahmen, normale Groesse. Hier nichts Ã¤ndern!
+\newsavebox{\inhalt}
+\def\rahmen{\sbox{\inhalt}\bgroup\renewcommand{\baselinestretch}{1}\vbox\bgroup\hsize\textwidth}
+\def\endrahmen{\par\vskip-\lastskip\egroup\egroup\fboxsep3mm%
+\framebox[\textwidth][l]{\usebox{\inhalt}}}
+
+\definecolor{black}{rgb}{0.0, 0.0, 0.0}
+\definecolor{orange}{rgb}{1.0, 0.49, 0.0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{aliceblue}{rgb}{0.94, 0.97, 1.0}
+\definecolor{applegreen}{rgb}{0.55, 0.71, 0.0}
+\definecolor{hanpurple}{rgb}{0.32, 0.09, 0.98}
+\definecolor{darkorange}{rgb}{1.0, 0.55, 0.0}
+\definecolor{darkmidnightblue}{rgb}{0.0, 0.2, 0.4}
+
+\lstdefinestyle{customc}{
+	belowcaptionskip=1\baselineskip,
+	breaklines=false,
+	breakatwhitespace=false,
+	backgroundcolor=\color{aliceblue},
+	numbers=left,
+	numbersep=5pt,
+	numberstyle=\tiny\color{mygray},
+	tabsize=2,
+	%frame=L,
+	keepspaces=true,
+	xleftmargin=\parindent,
+	language=Bash,
+	showstringspaces=false,
+	basicstyle=\footnotesize\ttfamily,
+	keywordstyle=\color{darkorange},
+	commentstyle=\color{hanpurple},
+	deletekeywords={test, @},
+	otherkeywords={=},
+	identifierstyle=\color{darkmidnightblue},
+	stringstyle=\color{orange},
+}
+
+\lstset{escapechar=@,style=customc}
+
+
+% TrennvorschlÃ¤ge fÃ¼r falsch getrennte WÃ¶rter.
+% Wird hÃ¤ufig bei eingedeutschen WÃ¶rtern benÃ¶tigt, da LaTeX hierbei
+% gerne falsch trennt. Alternativ kann auch im Fliesstext ein
+% Trennvorschlag per "\-" hinterlegt werden, bspw.:
+% Die Hard\-ware besteht aus A und B.
+\hyphenation{
+Hard-ware
+}
+
+% Sonstige Befehlsdefinitionen hier ablegen.
+\newcommand{\entspricht}{\stackrel{\wedge}{=}}
+\parindent0pt % keine EinrÃ¼ckung zu Beginn eines Absatzes
+
+\usepackage{lipsum}
+
+\newenvironment{absolutelynopagebreak}
+{\par\nobreak\vfil\penalty0\vfilneg
+	\vtop\bgroup}
+{\par\xdef\tpd{\the\prevdepth}\egroup
+	\prevdepth=\tpd}
+
+
+\begin{document}
+\addtokomafont{chapter}{\Large} %SchriftgrÃ¶ÃŸe der Ãœberschrift
+\renewcommand*{\chapterheadstartvskip}{\vspace*{-\topskip}} %Abstand vor Ãœberschrift verkleinern
+
+\onehalfspacing %1,5 facher Zeilenabstand
+\input{jstrg-projektdokumentation-titelblatt-utf8.tex}
+
+% Inhaltsverzeichnis
+\cleardoublepage % Seitenumbruch erzwingen vor Ã„nderung des Nummerierungsstils
+\pagenumbering{roman} % Nummerierung der Seiten ab hier: i, ii, iii, iv...
+\pagestyle{scrheadings} % Ab hier mit Kopf- und Fusszeile
+\tableofcontents
+
+% Die einzelnen Kapitel
+\cleardoublepage % Seitenumbruch erzwingen vor Ã„nderung des Nummerierungsstils
+\pagenumbering{arabic} % Nummerierung der Seiten ab hier: 1, 2, 3, 4...
+	
+	\title{jStrg}
+	\maketitle	
+	\newpage{}
+	
+	
+	\part{Introduction}
+	\chapter{Goals}
+	
+	JStrg server is a backend for various applications.
+    Applications like these need a server that is able to manage huge amounts of data.
+
+    Example for this are:
+	\begin{itemize}
+		\item Serverapplications which wants to deliver content,
+                but not able to hold up the neccessary disk space.
+		\item Backupapplications
+		\item Cloud Storage - continuous synchronization to the cloud
+		\item Filesharing
+		\item Local applications which bind persistent data at useraccounts and want to serve
+		this over the network.
+	\end{itemize}
+	
+	If you want to run jStrg, there's no need for disk space.
+    You can easily use Cloud Storage from established providers.
+	
+	\chapter{current status}
+	At this moment only the core of the software is used.
+    
+    \begin{itemize}
+	    \item file handling: uploaded files get automatically forwarded to the destination location (at this stadium commonly a Cloud Storage Provider)
+	    \item configuration: jStrg can be configured by a jstrg-conf.conf file for global settings
+	    \item application configuration: applications can be registered to jstrg by providing a file named jstrg-[APPNAME].conf
+	    \item network communication: a socket is created for each application known to jstrg
+	    \item network communication: jstrg reacts to string based requests, allowing an application to send multiple request types to the server (including up/download requests)
+	    \item Example Client: additionally in simple\_console an sync mechanism is implemented. This can be used to sync local folders to the server. 
+	\end{itemize}
+
+	\chapter{Roadmap}
+	In the next semester the following improvements and extenions are planned:
+	\begin{itemize}
+		\item Multithreading: one server and many clients can work parallel.
+		\item Network: an functionally interface to clients and other JStrg servers (jStrgConnector).
+		\item Configuration: some improvments have to be done here
+		\item Database: persistant data holding
+		\item (Streaming: jStrg is used to be able to manage an application comparable to YouTube, what causes jStrg to provide a media file streaming solution)
+		\item Exampleclients: SimpleConsole, some existing webapplications
+		\item Interface for an operator
+		\item Delete Files
+		\item Internal Funktions: scrub mechanism
+		\item Internal Funktions: change storage pools
+		\item Internal Funktions: cleanup FileVersions
+		\item Internal Funktions: improvement of deduplication and caching behavior
+	\end{itemize}
+	
+	
+	
+	\part{Construction source/packages}
+	\chapter{jStrg}
+	\subsubsection{main}
+	 Here is main programm is started. In attention to the settings the networserver or the console is starting.
+	\subsubsection{Environment}
+	\paragraph{global list}
+	Contains an global list which is use to hold up data for the main programm.Later the posts should be load dynamicly from the database
+	\paragraph{initial configuration}
+	DThe class Enviroment also contains the global initializations for the logfile and the settings.
+	\paragraph{seed}
+	In the development phase we're used an seed method to setup an initial position with testdata.
+	\section{communication\_management}
+	This Package contains all known request and answer types that can be received or send by the server (as listed in the JavaDoc)
+	\subsection{answers}
+	This Package contains all answers
+	\subsection{requests}
+	This Package contains all requests	
+	\section{exceptions}
+	Self defined expections are collected here
+	
+	\section{file\_system}
+	This important package implement the internal logical viewing of the filesystem.
+	\subsubsection{User} 
+	Represent users with id, passwords and different storage-backends
+	\subsubsection{File/FileFolder}
+	This is main filesystem.Every user has a rootfolder, which can't be viewed from outside. He is used as an container for all top-level elements. Every element knows which filefolder is superordinated to him. This descript the meta data. In the class file are few implimentations which could be outsorced lately. They can easly noticed , because they have "test" in the method name.
+
+	\subsubsection{FileVersion}
+    Physical data which are stored in the backend. Every file has one fileversion. This fileversion knows the previous, if this is existed. Contains also e.g. size, checksum and timestamp. 
+	\subsubsection{Application}
+	Responsible for different applications which are provided from the jStrg server. The applications have them own usebase. You can create one configuration file for one application
+	\subsubsection{Settings}
+	All settings can be done here.
+	
+	\section{network\_communication}
+	This important package makes the server listen on a port and handling the requests and answers defined in the communication\_management package
+	
+	\section{simple\_console}
+	This is an example for one client. In cause to the development position there at this time no external connections and multithreating. So we implemented this directly in to the project.
+	\subsection{commands}
+	Some comandos are filed here.
+	\paragraph{functions}
+	You can find detailed informations in the manual
+	\newpage
+	\section{storage\_management}
+	Implements the total physical administration for the uploaded files.
+	\subsubsection{Location}
+	Interface for other methodes. The only special feature is still the CacheFileLock. Otherwise, only the interface is used.
+	\subsubsection{CacheFileLock}
+	This class implements the locks to CacheFiles. Now we can use the available resources efficiently. With this lock on an file we can setup an need automatically.If you are the first one, the file must be served. An addionally flag mark this and now you can read the file. So several Clients can download one file, without to turnout multiple times from the backend. This class is in the early stage.
+	\subsubsection{DiskConnector, GoogleConnector, S3Connector}
+	Backends which are supported at this moment.It can be all which is understanding java. E.G:  Microsoft Azure, Ceph, Tape, NoSQL, Hadoop.
+	
+	\section{tests}
+	All test are collected in this package
+	\subsection{integration\_tests}
+	Tests for the Environment of jStrg
+	\subsubsection{server\_tests}
+	this tests pings all known jStrg Clusters and all Webservers registered to jStrg and returns false if a single instance is not reachable
+	\subsection{unit\_tests}
+	Tests for importants classes.
+	\subsubsection{console\_tests}
+	Test for individually console commands. Because many methods throw a chain of actions is here much more tested than it appears.
+	\section{lib}
+	External Libraries.The most of them a compiled with marve. others come already pre-compiled from various java repositories.Since only widespread and well-known libraries are used , here has been no detailed indication of the source.
+	\section{testdata}
+	These data are used in the unit tests.Due to time constraints here was used in a solution , the only source waived. Instead,real test data are included.
+        \part{Manual}
+	\chapter{Conditions}
+	\section{Connectors}
+	\subsection{Access details}
+If the connectors for example, Amazon S3 or Google Cloud Storage to be used must be valid credentials available. Due to the nature of these data ( If the test quota is exceeded , this produces an invoice for the stored credit card ) no test connections are supplied.
+	\subsection{Buckets}
+In the cloud storage providers corresponding buckets and / or project id 's must be created. The exact procedure depends on the provider. The configuration should be largely self-explanatory.
+	\chapter{Developers Cookbook}
+	\section{IntelliJ}{Instructions for a developer working environment}
+	\begin{enumerate}
+		\item Use as project-root the github root directory.
+		\item The Java SDK specify. Note the language level 8 is posted.
+		\item Under File -> Projectstructure -> Modules delete all and add the project-root. 
+Now would IntelliJ have recognized the code / src folder correctly and colorize it blue.Now the import is working again.
+		\item Under File -> Projectstructure -> Global Libraries add the code/lib folder. Add IntelliJ libs to serve junit.
+		\item Under "Artifacts" add an new entry .Add "jstrg compile output".Add META-INF with the main class "jStrg.Main". Or use existing.
+		\item To compile succesful go to  "Modules" -> "Paths" add custom Path. IntelliJ not created this automatically. Here is uses "sonstiges/".
+		
+	\end{enumerate}
+	
+	Now, the work environment is ready. You can run tests that compile and produce an artifact .
+	
+	\chapter{Usermanual}
+	\section{Installation}
+	\subsection{Artifact}
+	With a functioning development environment Artifact can be generated.
+	\subsection{program start}
+	start the program with
+	\begin{lstlisting}
+	java -cp "<path to .jar >:<path to code/lib folder>/*" jStrg.Main
+	\end{lstlisting}
+        Alternatively, in the folder "sonstiges" run "start.sh" . This script contains all to execute jStrg .
+	\section{Configuration}
+	\subsection{Global Configuration}
+         There is a possibility jStrg a global configuration file to control. This must be in the user's home directory that runs the Java process . The name is " .jstrg.conf "
+	\begin{absolutelynopagebreak}
+	\subsubsection{Example}
+	\begin{lstlisting}
+	#
+	# default config file, with default values.
+	# put this file in your user home and rename it to ".jstrg.conf"
+	#
+	logfile=/tmp/jstrg.log
+	loglevel=finest
+	console=yes
+	networkserver=no
+	user_folder=/tmp/nutzer6/ 
+	\end{lstlisting}
+	\end{absolutelynopagebreak}
+	\subsection{Konfiguration pro Anwendung}
+	Applications are addressed via a separate configuration file . These must be in the home directory of the executing user . The name follows the pattern :
+	\begin{lstlisting}
+	$HOME/.jstrg-<Applikationsname>.conf
+	\end{lstlisting}
+	\begin{absolutelynopagebreak}
+	\subsubsection{Example of an application configuration file}
+	\begin{lstlisting}
+	s3=yes
+	s3_default=jstrg-development
+	s3_aws_access_key_id=<id>
+	s3_aws_access_key=<key>
+	bytes_per_s3_bucket=5368709120
+	disk=yes
+	disk_default=/home/henne/test/
+	gcloud=yes
+	gcloud_bucket=jstrg-bucket
+	gcloud_projectid=jstrg-development
+	gcloud_json_credentials=/home/henne/.gcloud-key.json
+	bytes_per_google_bucket=5368709120
+	cache_default=/home/henne/test/cache/
+	\end{lstlisting}
+	\end{absolutelynopagebreak}
+	\section{Console}
+	Um die Konsole zu benutzen, muss in der globalen Konfiguration 
+	\begin{lstlisting}
+	console=yes
+	\end{lstlisting}
+	gesetzt sein.
+	\subsection{Allgemeine Funktionen}
+	\begin{itemize}
+		\item Tab Completion: Kommandos und Pfade können mithilfe von <tab> komplettiert werden. Doppelt <tab> zeigt verfügbare Optionen an.
+		\item Hilfe: unbekannte Kommandos rufen automatisch eine Kurzbeschreibung der Kommandos auf
+		\item Kommandohistorie: mit den Pfeiltasten auf und ab kann die Historie durchgeblättert werden.
+	\end{itemize}
+	
+	\subsection{wichtige Befehle}
+	\subsubsection{context}
+	Der Kontext kann gewechselt werden. "admin" oder <userid> sind als Argument akzeptiert. Zum testen kann Nutzer ID 6 verwendet werden. Dies ist ein leerer Testnutzer.
+	\subsubsection{prop}
+	Nutzerspezifische Einstellungen. Momentan kann nur der user\_folder eingestellt werden. Dieser muss vorher existieren. Dient als Wurzelverzeichnis für das sync Kommando.
+	\subsubsection{put}
+	Lädt eine Datei auf den Server hoch und platziert es im aktuellen Verzeichnis. Nach einem sync würde es auch im Wurzelverzeichnis liegen.
+	\subsubsection{jstrg sync}
+	Synchronisiert das Wurzelverzeichnis mit dem Server.
+	\subsubsection{rollback}
+	Frühere Versionen einer Datei können mit "rollback" angezeigt werden. In der Ausgabe erscheinen Nummern an den Zeilen. Mit "rollback <datei> <nr>" kann zu einer bestimmten Version zurückgekehrt werden. Der "mofification-timestamp" der Datei wird auf die Zeit des rollbacks gesetzt.
+	\subsubsection{mkdir}
+	Ein Verzeichnis auf dem Server erstellen.
+	\subsubsection{cd}
+	In ein Verzeichnis wechseln. Es kann immer nur ein Level angeben werden. Zusätzlich gibt es noch "cd .." für das Übergeordnete Verzeichnis. Ein "cd" ohne Argumente wechselt in das Wurzelverzeichnis.
+	\newpage{}
+	\section{Beispiel Benutzung}
+	\begin{lstlisting}[otherkeywords={>}, deletekeywords={set,cd,exit}]
+	henne@\char64@xmg ~ @\$@ mkdir /tmp/nutzer6
+	henne@\char64@xmg ~ @\$@ projekte/jstrg/sonstiges/start.sh
+	...
+	> context switch 6
+	switched to user
+	> prop get user_folder
+	/tmp/nutzer6/
+	> prop set user_folder /tmp
+	new root directory: /tmp
+	> prop get user_folder
+	/tmp
+	> prop set user_folder /tmp/nutzer6
+	new root directory: /tmp/nutzer6
+	> ls
+	found: 0
+	> mkdir testfolder
+	created new folder: /testfolder
+	> put /tmp/jstrg.log
+	jstrg.log        jstrg.log.lck
+	> put /tmp/jstrg.log
+	uploading file: jstrg.log
+	upload successful
+	> ls
+	testfolder/
+	jstrg.log
+	found: 1
+	> cd testfolder
+	current directory: /testfolder
+	> put /tmp/jstrg.log
+	uploading file: jstrg.log
+	upload successful
+	> ls
+	jstrg.log
+	found: 1
+	> jstrg sync
+	completed without errors
+	> put /tmp/jstrg.log
+	uploading file: jstrg.log
+	upload successful
+	> jstrg sync
+	completed without errors
+	> ls
+	jstrg.log
+	found: 1
+	> rollback jstrg.log
+	1 -> Version vom Sat Feb 27 13:16:15 CET 2016, size: 6378
+	found 1 versions
+	> rollback jstrg.log 1
+	rollback file: success
+	> ls
+	jstrg.log
+	found: 1
+	> rollback jstrg.log
+	1 -> Version vom Sat Feb 27 13:16:37 CET 2016, size: 11073
+	2 -> Version vom Sat Feb 27 13:16:15 CET 2016, size: 6378
+	found 2 versions
+	> rollback jstrg.log 1
+	rollback file: success
+	> jstrg sync
+	completed without errors
+	> exit
+	henne@\char64@xmg ~ @\$@ ls -lR /tmp/nutzer6/
+	/tmp/nutzer6/:
+	insgesamt 4
+	-rw-r--r-- 1 henne users 4007 27. Feb 13:14 jstrg.log
+	drwxr-xr-x 1 henne users   18 27. Feb 13:16 testfolder
+	
+	/tmp/nutzer6/testfolder:
+	insgesamt 12
+	-rw-r--r-- 1 henne users 11171 27. Feb 13:18 jstrg.log
+	\end{lstlisting}
+	
+	
+\end{document}

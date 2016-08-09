@@ -1,0 +1,8 @@
+<sql-result-set-mapping name="FileVersion_Location">
+    <entity-result entity-class="jStrg.network_management.storage_management.core.StorageCell">
+        <field-result name="id" column="authorId"/>
+        <field-result name="firstName" column="firstName"/>
+        <field-result name="lastName" column="lastName"/>
+        <field-result name="version" column="authorVersion"/>
+    </entity-result>
+</sql-result-set-mapping>

@@ -1,0 +1,73 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+    <ui:style>
+        .FileButton {
+            display: block;
+            width: 100%;
+            padding-top: 10px;
+        }
+
+        .FileButton a {
+            display: block;
+            cursor: pointer;
+            padding: 10px;
+            color: white;
+
+            background-color: rgba(68, 70, 79, 0.5);
+            margin: 3px;
+        }
+
+        .FileMenu {
+            background-color: #24262d;
+        }
+
+        .FileMenu ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #24262d;
+        }
+
+        .FileMenu li {
+            float: left;
+        }
+
+        .FileMenu li a {
+            display: block;
+            color: #6d757d;
+            text-align: center;
+            padding: 5px 5px;
+            text-decoration: none;
+            border: solid 1px #949ba2;
+            border-radius: 5px;
+
+        }
+
+        .FileMenu li a:hover {
+            cursor: default;
+            background-color:  rgba(68, 70, 79, 0.5);
+            border-color: #f7af3e;
+
+        }
+    </ui:style>
+    <g:HTMLPanel addStyleNames="{style.FileButton}">
+        <g:Hyperlink ui:field="button"></g:Hyperlink>
+        <g:HTMLPanel ui:field="fileMenu" addStyleNames="{style.FileMenu}">
+            <ul>
+                <li>
+                    <g:Hyperlink ui:field="rename">Rename</g:Hyperlink>
+                </li>
+                <li>
+                    <g:Hyperlink ui:field="remove">Remove</g:Hyperlink>
+                </li>
+                <li>
+                    <g:Hyperlink ui:field="update">Update</g:Hyperlink>
+                </li>
+                <li>
+                    <g:Hyperlink ui:field="rollback">Rollback</g:Hyperlink>
+                </li>
+            </ul>
+        </g:HTMLPanel>
+    </g:HTMLPanel>
+</ui:UiBinder>

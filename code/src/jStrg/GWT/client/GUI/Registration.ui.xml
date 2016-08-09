@@ -1,0 +1,19 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+    <ui:style>
+        .regestrierung {
+
+        }
+
+        .regestrierung input[type="text"] {
+            background-color: black;
+            color: white;
+        }
+    </ui:style>
+
+    <g:HTMLPanel>
+        <H1>Regestrierung</H1>
+        <g:InlineLabel>Name:</g:InlineLabel>
+        <g:TextBox ui:field="regName"/>
+    </g:HTMLPanel>
+</ui:UiBinder>

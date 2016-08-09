@@ -1,0 +1,47 @@
+#
+# default config file, with default values.
+# put this file in your user home and rename it to ".jstrg.conf"
+#
+logfile=/tmp/jstrg.log
+loglevel=finest
+console=no
+networkserver=yes
+user_folder=/tmp/nutzer6/
+# database
+db_server=localhost
+db_port=3306
+db_database=jstrg_dev
+db_username=jstrguser
+db_password=jstrgdevpasswd
+db_loglevel=INFO
+
+
+############################
+#  DEVELOPMENT OPTIONS     #
+############################
+#
+disable_seed=no
+repository_path=D:/Data/IdeaProjects/jstrg
+
+# cache location
+cache_default=/home/henne/test/cache/
+
+# Features
+#s3=yes
+disk=yes
+#gcloud=yes
+#
+# Feature config
+#
+disk_default=/home/henne/test/
+bytes_per_disk=5368709120
+#
+bytes_per_s3_bucket=5368709120
+s3_default=jstrg-development
+s3_aws_access_key_id=
+s3_aws_access_key=
+#
+gcloud_bucket=jstrg-bucket2
+gcloud_projectid=jstrg-development
+gcloud_json_credentials=/home/henne/.gcloud-jstrg.json
+bytes_per_google_bucket=5368709120

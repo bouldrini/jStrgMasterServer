@@ -1,0 +1,83 @@
+Programmieren 3
+Jstrg Dokumentation
+
+Schritt 1:
+Wahl des Themas:
+Wir haben uns für ein Cloudstorage System entschieden weil…
+Aufgabenverteilung
+	Wer macht Doku
+	Wer macht Dies
+	Wer macht Das
+
+Schritt 2:
+Planungsphase:
+Erarbeiten eines UML Diagramms zum besseren Verständnis des Gesamtvorhabens
+
+
+Schritt 3:
+Definition der ersten Arbeitsschritte
+	Klassen implementieren
+		Seed Dateien schreiben
+		
+	festgelegte Schnittstellen definieren
+		File
+			Konstruktor
+			String checksum;
+			static File upload(Filestream, FileFolder)
+				optional: Methode zum hochladen einer neuen Datei
+			String generate_checksum()
+				primär: Methode zum generieren einer shasum über dem 	Filestream eines Files 
+			Location location()
+				primär: Methode zum abfragen der zugeordneten Location
+			Modifier[] modifiers()
+				primär: Methode zum abfragen aller Modifiers einer Datei
+		User (wasdas)
+			Konstruktor
+			boolean can_invite?(FileFolder)
+				primär: Gibt true zurück wenn ein User das Privilege besitzt einen anderen User zu diesem FileFolder einzuladen
+
+			boolean can_read?(File)
+				primär: Gibt true zurück wenn ein User das Privilege besitzt ein File zu sehen
+			boolean can_read?(FileFolder)
+				primär: Gibt true zurück wenn ein User das Privilege besitzt einen FileFolder zu sehen
+
+			boolean can_write?(File)
+				primär: Gibt true zurück wenn ein User das Privilege besitzt ein File zu sehen
+			boolean can_write?(FileFolder)
+				primär: Gibt true zurück wenn ein User das Privilege besitzt einen FileFolder zu sehen
+
+			boolean has_role?(Symbol)
+				primär: Gibt true zurück wenn ein User die gegebene Role besitzt
+			Role role()
+				primär: Gibt die Role eines Users zurück
+			
+
+
+
+		FileFolder
+			Konstruktor
+			File[] files()
+				primär: Gibt alle Files in diesem FileFolder zurück
+			FileType[] allowed_file_types()
+		Modifier (richardwieditz)
+			Konstruktor
+			User user()
+				primär: Gibt den User zurück durch den das Modifier (Log) erstellt wurde
+		Privelege
+			Konstruktor
+			FileFolder file_folder()
+				primär: Gibt den zugeordneten FileFolder zurück
+			File file()
+				primär: Gibt das zugeordneten File zurück
+			User user()
+				primär: Gibt den zugeordneten User zurück
+		FileTypeMappings
+			Konstruktor
+			FileFolder file_folder()
+				primär: Gibt den zugeordneten FileFolder zurück
+			Type type()
+				primär: Gibt das zugeordneten File zurück 
+		Location
+			Konstruktor
+			File file()
+				optional: Gibt zugeordnetes File zurück
